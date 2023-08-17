@@ -1,0 +1,33 @@
+{% set version = "1.0" %}
+{% set program = "ct2out" %}
+{% set sha256 = "8c8245884abd0a5f5e983dc7533ed59262fe8aa3b61a23c6982b5a82318032dc" %}
+
+package:
+  name: {{ program }}
+  version: {{ version }}
+
+build:
+  number: 0
+
+source:
+  url: https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/mirpara/ct2out.tar.gz
+  sha256: {{ sha256 }}
+
+requirements:
+  build:
+    - {{ compiler('fortran') }}
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+  host:
+    -  gfortran
+#  run:
+#    - perl
+
+test:
+  commands:
+    - which {{ program }}
+
+about:
+  home: http://www.whiov.ac.cn
+  license: custom
+  summary: Program ct2out - Creates an ASCII display of a nucleic acid secondary structure from a ct file

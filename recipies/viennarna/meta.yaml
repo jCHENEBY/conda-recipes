@@ -24,8 +24,8 @@ requirements:
     - perl=5.32.1
     - python=3.10.8
     - mpfr
-    - clang
-    - clangxx
+#    - clang
+#    - clangxx
 #    - pkgconfig ## needed for viennarna version checks in dependent packages
 #    - bzip2
 #    - clang=16.0.1

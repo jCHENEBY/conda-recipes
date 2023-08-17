@@ -11,4 +11,7 @@
 ## Install
 make install
 
+#cp $PREFIX/lib/libmpfr.6.dylib $PREFIX/bin/../lib/
+
+
 
