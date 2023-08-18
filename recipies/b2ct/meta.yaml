@@ -1,0 +1,33 @@
+{% set version = "2.5.1" %}
+{% set program = "b2ct" %}
+{% set sha256 = "93540f99a723d1f0dd30375fc99bac65983b4cceffe0ff379f89650bc7b16eab" %}
+
+package:
+  name: {{ program }}
+  version: {{ version }}
+
+build:
+  number: 0
+
+source:
+  url: https://github.com/ViennaRNA/ViennaRNA/raw/master/src/Utils/b2ct.c
+  sha256: {{ sha256 }}
+
+requirements:
+  build:
+    - {{ compiler('fortran') }}
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+  host:
+    -  gfortran
+#  run:
+#    - perl
+
+test:
+  commands:
+    - which {{ program }}
+
+about:
+  home: https://github.com/ViennaRNA/ViennaRNA
+  license: custom
+  summary: This program converts the bracket notation for RNA secondary structures produced by RNAfold to .ct files used by Michael Zukers Program.
