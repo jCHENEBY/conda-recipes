@@ -1,7 +1,7 @@
 {% set package = "ucsc-twobittofa" %}
 {% set program = "twoBitToFa" %}
-{% set version = "366" %}
-{% set sha256 = "c110a27acd25df5c4ae56a9d4c359b40e83e3b1cca7cb61361e623fc8574bdd7" %}
+{% set version = "457" %}
+{% set sha256 = "fa52259d4998fea75555fe7952c79d2f9a572e3be52a4274e6bb2db706d152fc" %}
 
 package:
   name: {{ package }}
@@ -10,8 +10,8 @@ package:
 source:
   url: "http://hgdownload.cse.ucsc.edu/admin/exe/userApps.archive/userApps.v{{ version }}.src.tgz"
   sha256: {{ sha256 }}
-  patches:
-    - "include.patch"
+#  patches:
+#    - "include.patch"
 
 
 build:

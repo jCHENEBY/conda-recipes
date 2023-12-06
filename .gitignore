@@ -1,3 +1,5 @@
 source/
 bin/
 .idea/
+plateform/
+.ssh

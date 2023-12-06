@@ -15,11 +15,13 @@ source:
 
 requirements:
   build:
-    - {{ compiler('fortran') }}
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
+    - {{ compiler('fortran') }} # [osx]
+#    - {{ compiler('c') }}
+#    - {{ compiler('cxx') }}
   host:
-    -  gfortran
+#    - gfortran
+    -  libgfortran5 # [linux]
+#    - fortran-compiler
 #  run:
 #    - perl
 
