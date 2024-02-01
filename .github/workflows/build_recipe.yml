@@ -20,7 +20,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        recipe: [ 'b2ct', 'ct2out', 'ucsc-blat', 'ucsc-fatotwobit', 'ucsc-twobitinfo', 'ucsc-twobittofa', 'viennarna' ]
+#        recipe: [ 'b2ct', 'ct2out', 'ucsc-blat', 'ucsc-fatotwobit', 'ucsc-twobitinfo', 'ucsc-twobittofa', 'viennarna' ]
+        recipe: [ 'b2ct']
 
     steps:
       - name: Check out code
@@ -38,25 +39,28 @@ jobs:
       - name: Install conda build and anaconda-client
         run: conda install conda-build anaconda-client
 
-      - name: Conda Info
-        shell: bash -l {0}
-        run: conda info
-
-      - name: Build Conda Package
-        shell: bash -l {0}
-        run: conda build recipes/${{ matrix.recipe }}/
-
-      - name: Upload Conda Package
-        if: success() && github.ref == 'refs/heads/main'
-        shell: bash -l {0}
-        run: |
-          anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload $(conda info --root)/conda-bld/osx-64/*.tar.bz2
-        env:
-          ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
-
-      # Optional: If you want to keep the built packages as artifacts, add this step
-      - name: Archive Production Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: conda-packages
-          path: $(conda info --root)/conda-bld/osx-64/*.tar.bz2
+      - name: Install conda build and anaconda-client
+        run: anaconda --help
+#
+#      - name: Conda Info
+#        shell: bash -l {0}
+#        run: conda info
+#
+#      - name: Build Conda Package
+#        shell: bash -l {0}
+#        run: conda build recipes/${{ matrix.recipe }}/
+#
+#      - name: Upload Conda Package
+#        if: success() && github.ref == 'refs/heads/main'
+#        shell: bash -l {0}
+#        run: |
+#          anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload $(conda info --root)/conda-bld/osx-64/*.tar.bz2
+#        env:
+#          ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
+#
+#      # Optional: If you want to keep the built packages as artifacts, add this step
+#      - name: Archive Production Artifacts
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: conda-packages
+#          path: $(conda info --root)/conda-bld/osx-64/*.tar.bz2
