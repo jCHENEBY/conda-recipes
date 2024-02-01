@@ -5,18 +5,21 @@ on:
     branches:
       - main
     paths:
-      - 'recipes/b2ct/**'
+      - 'recipes/**'
   pull_request:
     branches:
       - main
     paths:
-      - 'recipes/b2ct/**'
+      - 'recipes/**'
   workflow_dispatch:
 
 jobs:
   build:
     name: Build Conda Package on macOS Intel
     runs-on: macos-latest
+    strategy:
+      matrix:
+        recipe: [ 'b2ct', 'ct2out', 'ucsc-blat', 'ucsc-fatotwobit', 'ucsc-twobitinfo', 'ucsc-twobittofa', 'viennarna' ]
 
     steps:
       - name: Check out code
@@ -40,10 +43,10 @@ jobs:
 
       - name: Build Conda Package
         shell: bash -l {0}
-        run: conda build recipes/b2ct/
+        run: conda build recipes/${{ matrix.recipe }}/
 
       - name: Upload Conda Package
-        if: success() && github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: success() && github.ref == 'refs/heads/main'
         shell: bash -l {0}
         run: |
           anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload $(conda info --root)/conda-bld/osx-64/*.tar.bz2
