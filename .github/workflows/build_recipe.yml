@@ -33,8 +33,11 @@ jobs:
           auto-update-conda: true
           miniconda-version: "latest"
           python-version: 3.9
-          channels: anaconda,conda-forge
+          channels: conda-forge,anaconda
           channel-priority: strict
+
+      - name: Install conda build and anaconda-client
+        run: conda install conda-build anaconda-client
 
       - name: Install conda build and anaconda-client
         run: conda install conda-build anaconda-client
