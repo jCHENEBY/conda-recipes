@@ -1,0 +1,54 @@
+name: Build Conda Package
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'recipes/b2ct/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'recipes/b2ct/**'
+
+jobs:
+  build:
+    name: Build Conda Package on macOS Intel
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Conda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-update-conda: true
+          miniconda-version: "latest"
+          python-version: 3.9
+          channels: anaconda,conda-forge
+          channel-priority: strict
+
+      - name: Conda Info
+        shell: bash -l {0}
+        run: conda info
+
+      - name: Build Conda Package
+        shell: bash -l {0}
+        run: conda build recipes/b2ct/
+
+      - name: Upload Conda Package
+        if: success() && github.ref == 'refs/heads/main' && github.event_name == 'push'
+        shell: bash -l {0}
+        run: |
+          anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload $(conda info --root)/conda-bld/osx-64/*.tar.bz2
+        env:
+          ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
+
+      # Optional: If you want to keep the built packages as artifacts, add this step
+      - name: Archive Production Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: conda-packages
+          path: $(conda info --root)/conda-bld/osx-64/*.tar.bz2
