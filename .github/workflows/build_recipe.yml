@@ -40,9 +40,6 @@ jobs:
         run: conda install conda-build anaconda-client
 
       - name: Install conda build and anaconda-client
-        run: conda install conda-build anaconda-client
-
-      - name: Install conda build and anaconda-client
         run: anaconda --help
 #
 #      - name: Conda Info
