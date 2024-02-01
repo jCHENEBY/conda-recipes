@@ -31,8 +31,8 @@ jobs:
           channels: anaconda,conda-forge
           channel-priority: strict
 
-      - name: Install conda build
-        run: conda install conda-build
+      - name: Install conda build and anaconda-client
+        run: conda install conda-build anaconda-client
 
       - name: Conda Info
         shell: bash -l {0}
