@@ -15,7 +15,8 @@ source:
 
 requirements:
   build:
-    - {{ compiler('fortran') }} # [osx]
+    - {{ compiler('fortran') }}
+    - gfortran # [osx]
 #    - {{ compiler('c') }}
 #    - {{ compiler('cxx') }}
   host:
