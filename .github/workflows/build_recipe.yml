@@ -37,9 +37,9 @@ jobs:
           channel-priority: strict
 
       - name: Install conda build and anaconda-client
-        run: mamba install conda-build anaconda-client -y
+        run: conda install conda-build anaconda-client -y
 
-      - name: Install conda build and anaconda-client
+      - name: Check anaconda
         run: anaconda --help
 #
 #      - name: Conda Info
