@@ -31,36 +31,53 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           auto-update-conda: true
-          miniconda-version: "latest"
+#          miniconda-version: "latest"
+          miniforge-variant: Mambaforge
+          miniforge-version: latest
           python-version: 3.9
           channels: conda-forge,anaconda
           channel-priority: strict
 
-      - name: Install conda build and anaconda-client
-        run: conda install conda-build anaconda-client -y
+      - name: Install conda build
+        shell: bash -l {0}
+        run: mamba install conda-build
 
-      - name: Check anaconda
+      - name: Install anaconda-client
+        shell: bash -l {0}
+        run: mamba install anaconda-client
+
+      - name: test anaconda-client
+        shell: bash -l {0}
         run: anaconda --help
+
+      - name: Conda Info
+        shell: bash -l {0}
+        run: conda info
+
+      - name: Build Conda Package
+        shell: bash -l {0}
+        run: conda build recipes/${{ matrix.recipe }}/
+
+      # Optional: If you want to keep the built packages as artifacts, add this step
+      - name: Archive Production Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: conda-packages
+          path: $(conda info --root)/conda-bld/osx-64/*.tar.bz2
+
+      - name: Upload Conda Package
+        if: success() && github.ref == 'refs/heads/main'
+        shell: bash -l {0}
+        run: |
+          anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload $(conda info --root)/conda-bld/osx-64/*.tar.bz2
+        env:
+          ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
 #
-#      - name: Conda Info
-#        shell: bash -l {0}
-#        run: conda info
-#
-#      - name: Build Conda Package
-#        shell: bash -l {0}
-#        run: conda build recipes/${{ matrix.recipe }}/
-#
-#      - name: Upload Conda Package
-#        if: success() && github.ref == 'refs/heads/main'
-#        shell: bash -l {0}
-#        run: |
-#          anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload $(conda info --root)/conda-bld/osx-64/*.tar.bz2
-#        env:
-#          ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
-#
-#      # Optional: If you want to keep the built packages as artifacts, add this step
-#      - name: Archive Production Artifacts
-#        uses: actions/upload-artifact@v2
+#      - name: publish-to-conda
+#        uses: fcakyon/conda-publish-action@v1.3
 #        with:
-#          name: conda-packages
-#          path: $(conda info --root)/conda-bld/osx-64/*.tar.bz2
+#          subdir: 'conda'
+#          anacondatoken: ${{ secrets.ANACONDA_TOKEN }}
+#          platforms: 'win osx linux'
+##
+
