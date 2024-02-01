@@ -38,41 +38,37 @@ jobs:
           channels: conda-forge,anaconda
           channel-priority: strict
 
-      - name: test path env
+      - name: Install conda build
         shell: bash -l {0}
-        run: conda info --test
-#
-#      - name: Install conda build
-#        shell: bash -l {0}
-#        run: mamba install conda-build
-#
-#      - name: Install anaconda-client
-#        shell: bash -l {0}
-#        run: mamba install anaconda-client
-#
-#      - name: test anaconda-client
-#        shell: bash -l {0}
-#        run: anaconda --help
-#
-#      - name: Conda Info
-#        shell: bash -l {0}
-#        run: conda info
-#
-#      - name: Build Conda Package
-#        shell: bash -l {0}
-#        run: conda build recipes/${{ matrix.recipe }}/
-#
-#      # Optional: If you want to keep the built packages as artifacts, add this step
-#      - name: Archive Production Artifacts
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: conda-packages
-#          path: $(conda info --test)/conda-bld/osx-64/*.tar.bz2
-#
-#      - name: Upload Conda Package
-#        if: success() && github.ref == 'refs/heads/main'
-#        shell: bash -l {0}
-#        run: |
-#          anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload $(conda info --test)/conda-bld/osx-64/*.tar.bz2
-#        env:
-#          ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
+        run: mamba install conda-build
+
+      - name: Install anaconda-client
+        shell: bash -l {0}
+        run: mamba install anaconda-client
+
+      - name: test anaconda-client
+        shell: bash -l {0}
+        run: anaconda --help
+
+      - name: Conda Info
+        shell: bash -l {0}
+        run: conda info
+
+      - name: Build Conda Package
+        shell: bash -l {0}
+        run: conda build recipes/${{ matrix.recipe }}/
+
+      # Optional: If you want to keep the built packages as artifacts, add this step
+      - name: Archive Production Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: conda-packages
+          path: $(conda info --root)/envs/test/conda-bld/osx-64/*.tar.bz2
+
+      - name: Upload Conda Package
+        if: success() && github.ref == 'refs/heads/main'
+        shell: bash -l {0}
+        run: |
+          anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload $(conda info --root)/envs/test/conda-bld/osx-64/*.tar.bz2
+        env:
+          ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
