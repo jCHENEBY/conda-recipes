@@ -17,8 +17,8 @@ jobs:
   build:
     name: Build Conda Package on macOS Intel
     runs-on: macos-latest
-    fail-fast: false
     strategy:
+      fail-fast: false
       matrix:
         recipe: [ 'b2ct', 'ct2out', 'ucsc-blat', 'ucsc-fatotwobit', 'ucsc-twobitinfo', 'ucsc-twobittofa', 'viennarna' ]
 
