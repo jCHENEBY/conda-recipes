@@ -74,11 +74,16 @@ jobs:
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
 
       - name: Install package
-        if: ${{ matrix.recipe }}=='b2ct'
+        if: ${{ matrix.recipe }} == 'b2ct'
         shell: bash -l {0}
-        run: mamba install conda install jcheneby::b2ct
+        run: mamba create -n b2ct jcheneby::b2ct
+
+      - name: Install package
+        if: ${{ matrix.recipe }} == 'b2ct'
+        shell: bash -l {0}
+        run: mamba activate -n b2ct
 
       - name: Test package
-        if: ${{ matrix.recipe }}=='b2ct'
+        if: ${{ matrix.recipe }} == 'b2ct'
         shell: bash -l {0}
         run: b2ct < recipes/b2ct/stub_known_pri_fold_minus.rnafold.filtered
