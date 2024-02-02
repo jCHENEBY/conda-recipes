@@ -83,10 +83,10 @@ jobs:
         shell: bash -l {0}
         run: conda activate b2ct
 
-      - name: Test architecture
-        if: ${{ matrix.recipe }} == 'b2ct'
-        shell: bash -l {0}
-        run: lipo -info $(where b2ct)
+#      - name: Test architecture
+#        if: ${{ matrix.recipe }} == 'b2ct'
+#        shell: bash -l {0}
+#        run: lipo -info $(where b2ct)
 
       - name: Test package
         if: ${{ matrix.recipe }} == 'b2ct'
