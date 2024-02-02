@@ -23,6 +23,8 @@ requirements:
 test:
   commands:
     - which {{ program }}
+    - ls -la ${RECIPE_DIR}
+    - b2ct < ${RECIPE_DIR}/stub_known_pri_fold_minus.rnafold.filtered
 
 about:
   home: https://github.com/ViennaRNA/ViennaRNA
