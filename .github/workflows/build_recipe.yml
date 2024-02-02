@@ -69,6 +69,15 @@ jobs:
         if: success() && github.ref == 'refs/heads/main'
         shell: bash -l {0}
         run: |
-          anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload $(conda info --root)/envs/test/conda-bld/osx-64/*.tar.bz2
+          anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload $(conda info --root)/envs/test/conda-bld/osx-64/*.tar.bz2 --force
         env:
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
+
+      - name: Install package
+        if: ${{ matrix.recipe }}=='b2ct'
+        shell: bash -l {0}
+        run: mamba install conda install jcheneby::b2ct
+
+      - name: Test package
+        shell: bash -l {0}
+        run: b2ct < recipes/b2ct/stub_known_pri_fold_minus.rnafold.filtered
