@@ -76,12 +76,12 @@ jobs:
       - name: Install package
         if: ${{ matrix.recipe }} == 'b2ct'
         shell: bash -l {0}
-        run: mamba create -n b2ct jcheneby::b2ct
+        run: conda create -n b2ct jcheneby::b2ct
 
       - name: Install package
         if: ${{ matrix.recipe }} == 'b2ct'
         shell: bash -l {0}
-        run: mamba activate -n b2ct
+        run: conda activate -n b2ct
 
       - name: Test architecture
         if: ${{ matrix.recipe }} == 'b2ct'
