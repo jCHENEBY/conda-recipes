@@ -21,7 +21,7 @@ jobs:
       fail-fast: false
       matrix:
 #        recipe: [ 'b2ct', 'ct2out', 'ucsc-blat', 'ucsc-fatotwobit', 'ucsc-twobitinfo', 'ucsc-twobittofa', 'viennarna' ]
-        recipe: [ 'b2ct']
+        recipe: ['viennarna']
 
     steps:
       - name: Check out code
