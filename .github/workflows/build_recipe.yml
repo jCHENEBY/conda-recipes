@@ -69,7 +69,7 @@ jobs:
         if: success() && github.ref == 'refs/heads/main'
         shell: bash -l {0}
         run: |
-          anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload $(conda info --root)/envs/test/conda-bld/osx-64/*.tar.bz2 --force
+          anaconda -t ${{ secrets.ANACONDA_TOKEN }} upload $(conda info --root)/envs/test/conda-bld/osx-64/*.tar.bz2
         env:
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_TOKEN }}
 
